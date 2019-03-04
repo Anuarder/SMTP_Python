@@ -17,7 +17,7 @@ gmail = {
 }
 
 @app.route('/')
-def send():
+def main():
     return jsonify({'message': "All ok"})
 
 
@@ -64,4 +64,4 @@ def sendMail():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
