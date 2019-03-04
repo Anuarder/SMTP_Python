@@ -1,13 +1,14 @@
 from flask import Flask, jsonify, request
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
+
+import smtplib
 
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-import smtplib
 
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, support_credentials=True)
 
 
 gmail = {
@@ -22,18 +23,32 @@ def send():
 
 
 @app.route('/sendMail', methods=['POST'])
+@cross_origin(supports_credentials=True)
 def sendMail():
     data = request.get_json()  # Запись данных из POST запроса
     try:
-        message = MIMEMultipart()
-        message["Subject"] = data["Subject"]
-        message["To"] = data["email"]
-        message["From"] = "saiko.mailserver@gmail.com"
-        text_message = MIMEText(data["message"], "plain")
-        message.attach(text_message)
-
         smtpServer = smtplib.SMTP_SSL('smtp.gmail.com', 465)
         smtpServer.login(gmail["user"], gmail["password"])
+
+        message = MIMEMultipart()
+        message["Subject"] = data["subject"]
+        message["To"] = data["email"]
+        message["From"] = "saiko.mailserver@gmail.com"
+        html = """\
+        <html>
+        <body>
+            <p>
+                <div>Сообщение: {message}</div>
+                <div>Телефон: <a href="tel:{phone}">{phone}</a></div>
+                <div>Имя: {name}</div>
+            </p>
+        </body>
+        </html>
+        """.format(name=data["name"], phone=data["phone"], message=data["message"])
+        
+        part1 = MIMEText(html, 'html')
+        message.attach(part1)
+
         smtpServer.sendmail(
             "saiko.mailserver@gmail.com",
             data["email"],
