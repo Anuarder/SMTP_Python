@@ -16,7 +16,6 @@ gmail = {
     'password': 'Node122410'
 }
 
-
 @app.route('/')
 def send():
     return jsonify({'message': "All ok"})
