@@ -1,3 +1,9 @@
+# https://saiko-mail-service.herokuapp.com/ 
+# Не работает на сервере, надо норм deploy сделать
+
+# subject, name, phone, email, message - данные в json 
+
+
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 
