@@ -24,7 +24,7 @@ gmail = {
 
 @app.route('/')
 def main():
-    return jsonify({'message': "All ok"})
+    return "<h1>All Work</h1>"
 
 
 @app.route('/sendMail', methods=['POST'])
