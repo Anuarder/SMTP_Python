@@ -1,8 +1,5 @@
-# https://saiko-mail-service.herokuapp.com/ 
-# Не работает на сервере, надо норм deploy сделать
 
-# subject, name, phone, email, message - данные в json 
-
+# A very simple Flask Hello World app for you to get started with...
 
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
@@ -16,11 +13,15 @@ from email.mime.text import MIMEText
 app = Flask(__name__)
 CORS(app, support_credentials=True)
 
-
 gmail = {
     'user': 'saiko.mailserver@gmail.com',
     'password': 'Node122410'
 }
+
+#gmail = {
+ #   'user': 'sales@gornoesolnce.kz',
+  #  'password': 'GornoeSolnce123'
+#}
 
 @app.route('/')
 def main():
@@ -43,14 +44,13 @@ def sendMail():
         <html>
         <body>
             <p>
-                <div>Сообщение: {message}</div>
-                <div>Телефон: <a href="tel:{phone}">{phone}</a></div>
                 <div>Имя: {name}</div>
+                <div>Телефон: <a href="tel:{phone}">{phone}</a></div>
             </p>
         </body>
         </html>
         """.format(name=data["name"], phone=data["phone"], message=data["message"])
-        
+
         part1 = MIMEText(html, 'html')
         message.attach(part1)
 
