@@ -14,14 +14,9 @@ app = Flask(__name__)
 CORS(app, support_credentials=True)
 
 gmail = {
-    'user': 'saiko.mailserver@gmail.com',
-    'password': 'Node122410'
+    'user': '',
+    'password': ''
 }
-
-#gmail = {
- #   'user': 'sales@gornoesolnce.kz',
-  #  'password': 'GornoeSolnce123'
-#}
 
 @app.route('/')
 def main():
