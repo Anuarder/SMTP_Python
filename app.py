@@ -34,7 +34,7 @@ def sendMail():
         message = MIMEMultipart()
         message["Subject"] = data["subject"]
         message["To"] = data["email"]
-        message["From"] = "saiko.mailserver@gmail.com"
+        message["From"] = gmail["email"]
         html = """\
         <html>
         <body>
@@ -50,7 +50,7 @@ def sendMail():
         message.attach(part1)
 
         smtpServer.sendmail(
-            "saiko.mailserver@gmail.com",
+            gmail["email"],
             data["email"],
             message.as_string()
         )
